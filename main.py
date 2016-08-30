@@ -102,11 +102,16 @@ def notify(result):
     # msgRoot.attach(msgImage)
 
     # Send the email (this example assumes SMTP authentication is required)
-    smtp = smtplib.SMTP()
-    smtp.connect('smtp.sina.com')
-    smtp.login('myme5261314', 'Lp5261314!')
-    smtp.sendmail(strFrom, strTo, msgRoot.as_string())
-    smtp.quit()
+    try:
+        smtp = smtplib.SMTP()
+        smtp.connect('smtp.sina.com')
+        smtp.login('myme5261314', 'Lp5261314!')
+        smtp.sendmail(strFrom, strTo, msgRoot.as_string())
+        smtp.quit()
+    except Exception as e:
+        print(e)
+        return False
+    return True
 
 
 def main():
@@ -120,8 +125,8 @@ def main():
         result_list = [result for result in result_list if result["name"] != "" and result["entry_url"].split("/")[-1] not in exempt_list]
         for result in result_list:
             print(result)
-            notify(result)
-            exempt_list.append(result["entry_url"].split("/")[-1])
+            if notify(result):
+                exempt_list.append(result["entry_url"].split("/")[-1])
             time.sleep(30)
         with open("./exempt.txt", "a") as f:
             for result in result_list:
