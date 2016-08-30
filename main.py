@@ -61,8 +61,9 @@ def notify(result):
 
 
     # Define these once; use them twice!
-    strFrom = 'my5261314@163.com'
-    strTo = 'jingna93@163.com'
+    strFrom = 'myme5261314@sina.com'
+    # strTo = 'jingna93@163.com'
+    strTo = 'myme5261314@126.com'
 
     # Create the root message and fill in the from, to, and subject headers
     msgRoot = MIMEMultipart('related')
@@ -102,8 +103,8 @@ def notify(result):
 
     # Send the email (this example assumes SMTP authentication is required)
     smtp = smtplib.SMTP()
-    smtp.connect('smtp.163.com')
-    smtp.login('my5261314', '5261314')
+    smtp.connect('smtp.sina.com')
+    smtp.login('myme5261314', 'Lp5261314!')
     smtp.sendmail(strFrom, strTo, msgRoot.as_string())
     smtp.quit()
 
@@ -121,7 +122,7 @@ def main():
             print(result)
             notify(result)
             exempt_list.append(result["entry_url"].split("/")[-1])
-            time.sleep(20)
+            time.sleep(30)
         with open("./exempt.txt", "a") as f:
             for result in result_list:
                 idx = result["entry_url"].split("/")[-1]
